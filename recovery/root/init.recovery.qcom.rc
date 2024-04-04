@@ -34,22 +34,35 @@ service unified-script /system/bin/unified-script.sh
     oneshot
     seclabel u:r:recovery:s0
 
+service linkblobs /system/bin/linkblobs.sh
+    user root
+    group root
+    disabled
+    oneshot
+    seclabel u:r:recovery:s0
+
 on early-init
     mkdir /firmware 0771 system system
-    
+
 on init && property:ro.boot.dynamic_partitions=true
     exec u:r:recovery:s0 -- /system/bin/merge-fstab.sh
+
+on init
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw:/system/lib64/hw
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+
+on property:ro.crypto.state=encrypted && property:ro.crypto.type=file
+    chmod 0777 /system/bin/linkblobs.sh
+    start linkblobs
 
 on boot
     chmod 0777 /system/bin/unified-script.sh
     start unified-script
     start qseecomd
     exec u:r:recovery:s0 -- /system/bin/sleep 1s
-    start keymaster-3-0
     start health-hal-2-1
 
 on property:ro.twrp.fastbootd=0
