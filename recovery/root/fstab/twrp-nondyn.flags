@@ -4,8 +4,10 @@
 /cache            ext4      /dev/block/bootdevice/by-name/cache
 /recovery         emmc      /dev/block/bootdevice/by-name/recovery      flags=backup=1
 /system           ext4      /dev/block/bootdevice/by-name/system        flags=backup=1;wipeingui
+/system           erofs     /dev/block/bootdevice/by-name/system        flags=backup=1;wipeingui;fsflags="ro,wait"
 /system_image     emmc      /dev/block/bootdevice/by-name/system
 /vendor           ext4      /dev/block/bootdevice/by-name/vendor        flags=backup=1;wipeingui
+/vendor           erofs     /dev/block/bootdevice/by-name/vendor        flags=backup=1;wipeingui;fsflags="ro,wait"
 /vendor_image     emmc      /dev/block/bootdevice/by-name/vendor
 /persist          ext4      /dev/block/bootdevice/by-name/persist       flags=display="Persist";backup=1;fsflags="noatime,nosuid,nodev,barrier=1"
 /firmware         vfat      /dev/block/bootdevice/by-name/modem         flags=display="Firmware";mounttodecrypt;fsflags="ro"

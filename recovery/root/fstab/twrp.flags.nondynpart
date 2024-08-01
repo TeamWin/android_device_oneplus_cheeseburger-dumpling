@@ -1,6 +1,8 @@
 # mount point     fstype    device           device2                    flags
 
 /system           ext4      /dev/block/bootdevice/by-name/system        flags=backup=1;wipeingui
+/system           erofs     /dev/block/bootdevice/by-name/system        flags=backup=1;wipeingui;fsflags="ro,wait"
 /system_image     emmc      /dev/block/bootdevice/by-name/system
 /vendor           ext4      /dev/block/bootdevice/by-name/vendor        flags=backup=1;wipeingui
+/vendor           erofs     /dev/block/bootdevice/by-name/vendor        flags=backup=1;wipeingui;fsflags="ro,wait"
 /vendor_image     emmc      /dev/block/bootdevice/by-name/vendor
