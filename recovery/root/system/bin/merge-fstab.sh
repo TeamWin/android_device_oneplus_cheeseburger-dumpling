@@ -5,6 +5,7 @@ if dd if=/dev/block/by-name/system bs=256k count=1|strings|grep -qE 'cheesedump_
     echo >> /system/etc/recovery.fstab
     for p in system system_ext product vendor odm; do
         echo "${p} /${p} ext4 ro,barrier=1,discard wait,logical" >> /system/etc/recovery.fstab
+        echo "${p} /${p} erofs ro wait,logical" >> /system/etc/recovery.fstab
     done
     echo >> /system/etc/twrp.flags
     for p in vendor; do
